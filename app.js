@@ -6,7 +6,7 @@ const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-const productsRouter = require("./routes/products");
+const productsRouter = require("./routes/views/products");
 const productsApiRouter = require("./routes/Api/products");
 
 const app = express();
@@ -23,7 +23,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/static",express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+app.get("/", (req,res)=>{
+  res.redirect('/products')
+});
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/api/products", productsApiRouter);
