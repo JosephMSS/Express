@@ -9,6 +9,12 @@ const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/views/products");
 const productsApiRouter = require("./routes/Api/products");
 
+const {
+  logErrors,
+  clientErrorHandler,
+  errorHandler,
+}=require('./utils/middlewares/errorHandlers')
+
 const app = express();
 
 // view engine setup
@@ -35,14 +41,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
-
+app.use(logErrors)
+app.use(clientErrorHandler)
+app.use(errorHandler)
 module.exports = app;

@@ -13,6 +13,7 @@ router.delete("/:productId", remove);
 async function list(req, res, next) {
   const { tags } = req.query;
   try {
+    throw new Error('Error desde api')
     const products = await productsServices.getProducts({ tags });
     res.status(200).json({
       data: products,
@@ -35,7 +36,7 @@ async function get(req, res) {
   }
 }
 async function insert(req, res, next) {
-  const { body: product } = req.body; //de esta manera creamos un alias
+  const { body:product } = req; //de esta manera creamos un alias
   try {
     const response = await productsServices.createProduct({ product });
     res.status(201).json({
@@ -48,7 +49,8 @@ async function insert(req, res, next) {
 }
 async function update(req, res) {
   const { productId } = req.params;
-  const { body: product } = req.body;
+  const { body: product } = req;
+  console.log('JMMS_req',req)
   try {
     const response = await productsServices.updateProduct({
       product,
@@ -65,10 +67,11 @@ async function update(req, res) {
 function remove(req, res) {
   const { productId } = req.params;
   try {
-    const response = productsServices.deleteProduct(productId);
+    console.log('JMMS_productId',productId)
+    const response = productsServices.deleteProduct({productId});
     res.status(200).json({
       data: response,
-      message: "products deleted",
+      message: "product deleted",
     });
   } catch (error) {
     next(error)

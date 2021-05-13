@@ -7,7 +7,6 @@ class ProductsServices {
     this.mongoDB = new MongoLib();
   }
   async getProducts({ tags }) {
-    console.log("JMMS_this.collection", this.collection);
     const query = tags && { tags: { $in: tags } }; //&& funciona para preguntar si una variable existe
     const products = await this.mongoDB.getAll(this.collection, query);
     return products || [];
@@ -16,14 +15,29 @@ class ProductsServices {
     const product = await this.mongoDB.getAll(this.collection, productId);
     return product || [];
   }
-  createProduct({ product }) {
-    return Promise.resolve(productsMocks[productId]);
+  async createProduct({ product }) {
+    try {
+      const newProduct=await this.mongoDB.create(this.collection,product)
+      return newProduct;
+    } catch (error) {
+      console.error(error);
+    }
   }
-  updateProduct({ product, productId }) {
-    return Promise.resolve(productsMocks[productId]);
+  async updateProduct({ product, productId }) {
+    try {
+      const newProduct=await this.mongoDB.update(this.collection,productId,product)
+      return newProduct;
+    } catch (error) {
+      console.error(error);
+    }
   }
-  deleteProduct({ productId }) {
-    return Promise.resolve(productsMocks[productId]);
+  async deleteProduct({ productId }) {
+    try {
+      const response=await this.mongoDB.delete(this.collection,productId)
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 module.exports = ProductsServices;

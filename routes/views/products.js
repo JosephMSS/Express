@@ -4,6 +4,7 @@ const router = express.Router();
 const productServices = new ProductsServices();
 router.get("/", async function (req, res,next) {
   try {
+    throw new Error('Esto es un errore desde el cliente')
     const { tags } = req.query;
   products=await productServices.getProducts({tags})
   res.render("products", { products });
