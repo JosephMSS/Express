@@ -13,7 +13,6 @@ router.delete("/:productId", remove);
 async function list(req, res, next) {
   const { tags } = req.query;
   try {
-    throw new Error('Error desde api')
     const products = await productsServices.getProducts({ tags });
     res.status(200).json({
       data: products,
@@ -50,7 +49,6 @@ async function insert(req, res, next) {
 async function update(req, res) {
   const { productId } = req.params;
   const { body: product } = req;
-  console.log('JMMS_req',req)
   try {
     const response = await productsServices.updateProduct({
       product,
@@ -67,7 +65,6 @@ async function update(req, res) {
 function remove(req, res) {
   const { productId } = req.params;
   try {
-    console.log('JMMS_productId',productId)
     const response = productsServices.deleteProduct({productId});
     res.status(200).json({
       data: response,

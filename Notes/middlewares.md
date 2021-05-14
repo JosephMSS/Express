@@ -55,3 +55,5 @@ function errorHandler(err,req,res,next){
 > Los middlewares de error debe de estar al final ya que en caso de algun error en las rutas estos caigan en el middleware
 
 >Podemos lazar errores con throw new Error('Mensaje de error')
+## Middleware de validacion de datos
+>Esta va a ser una funcion de tipo closure, esta funcion retorna otra  funcion la cual va a ser el middleware, esto parapoder grabar el esquema(las reglas de como deben de ser nuestros datos), y como segundo parametro va  ser donde se recibe el request
